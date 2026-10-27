@@ -1,0 +1,30 @@
+{
+  "title": "Shop poster (y6)",
+  "summary": "A warm local-business poster that builds itself: the offer opens the film as a sticker or stamp, then the shop name, the lines and the button. Riso print, chalk menu board or kraft market stamps, all drawn in code; your photo large when you give one.",
+  "best_for": [
+    "cafés, bakeries, barbers, salons, gyms, shops",
+    "a deal or an opening (2 for 1, 20% off, first week free)",
+    "open houses and events"
+  ],
+  "aspect": "16:9",
+  "grammar": "y6_poster",
+  "copy": {
+    "templates/blank/vendor/gsap.min.js": "vendor/gsap.min.js",
+    "templates/blank/vendor/GSAP-LICENSE.txt": "vendor/GSAP-LICENSE.txt",
+    "templates/blank/vendor/GSAP-LICENSE.html": "vendor/GSAP-LICENSE.html",
+    "runtime/clip/clip.js": "vendor/clip/clip.js",
+    "runtime/clip/cues.js": "vendor/clip/cues.js",
+    "runtime/clip/lib": "vendor/clip/lib",
+    "runtime/clip/grammars": "vendor/clip/grammars",
+    "runtime/clip/LICENSE": "vendor/clip/LICENSE",
+    "runtime/clip/NOTICE.md": "vendor/clip/NOTICE.md",
+    "fonts/OFL.txt": "assets/fonts/OFL.txt",
+    "fonts/LICENSES.md": "assets/fonts/LICENSES.md",
+    "fonts/Anton-400.woff": "assets/fonts/Anton-400.woff",
+    "fonts/ArchivoBlack-400.woff": "assets/fonts/ArchivoBlack-400.woff",
+    "fonts/AlfaSlabOne-400.woff": "assets/fonts/AlfaSlabOne-400.woff",
+    "fonts/Kalam-700.woff": "assets/fonts/Kalam-700.woff",
+    "fonts/Caveat-600.woff": "assets/fonts/Caveat-600.woff",
+    "fonts/scripts": "assets/fonts/scripts"
+  }
+}

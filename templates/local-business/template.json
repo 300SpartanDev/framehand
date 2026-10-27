@@ -1,0 +1,22 @@
+{
+  "title": "Local business launch",
+  "summary": "Café / shop / salon style launch film: brand name, one offer, one CTA. Warm paper look, short beats an agent can fill in.",
+  "best_for": [
+    "café, bakery, coffee shop openings",
+    "salon / barbershop promos",
+    "neighborhood shop launch films",
+    "one-offer weekend specials"
+  ],
+  "aspect": "16:9",
+  "niche": "local-business",
+  "copy": {
+    "templates/blank/vendor/gsap.min.js": "vendor/gsap.min.js",
+    "templates/blank/vendor/GSAP-LICENSE.txt": "vendor/GSAP-LICENSE.txt",
+    "templates/blank/vendor/GSAP-LICENSE.html": "vendor/GSAP-LICENSE.html",
+    "fonts/Inter-var.woff": "assets/fonts/Inter-var.woff",
+    "fonts/Poppins-700.woff": "assets/fonts/Poppins-700.woff",
+    "fonts/Poppins-800.woff": "assets/fonts/Poppins-800.woff",
+    "fonts/OFL.txt": "assets/fonts/OFL.txt",
+    "fonts/LICENSES.md": "assets/fonts/LICENSES.md"
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "name": "framehand",
+  "version": "0.4.0",
+  "description": "FRAMEHAND — turn one line about your business into a short, unique promo video. Runs on your own computer; never posts for you.",
+  "type": "module",
+  "bin": {
+    "om": "cli/om.js",
+    "framehand": "cli/om.js"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "files": [
+    "cli",
+    "studio",
+    "runtime",
+    "templates",
+    "fonts",
+    "examples",
+    "skills",
+    "LICENSE",
+    "THIRD_PARTY.md",
+    "NOTICE.md",
+    "FORK.md",
+    "README.md"
+  ],
+  "scripts": {
+    "test": "node --import ./test/setup.mjs --test test/*.test.js",
+    "clean": "node cli/om.js reset --yes"
+  },
+  "keywords": [
+    "motion-graphics",
+    "animation",
+    "video",
+    "gsap",
+    "launch-video",
+    "framehand",
+    "local-business",
+    "real-estate",
+    "gym",
+    "x-demo",
+    "small-business",
+    "social-media",
+    "reels",
+    "tiktok"
+  ],
+  "author": "Leonidas Official",
+  "license": "MIT"
+}

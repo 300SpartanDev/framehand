@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en" data-composition-variables='[
+  {"id":"brandName","type":"string","label":"Brand / shop name","default":"Corner Bakery","group":"Brand"},
+  {"id":"tagline","type":"string","label":"One-line vibe","default":"Fresh bread, baked every morning","group":"Brand"},
+  {"id":"offer","type":"string","label":"One offer","default":"Two croissants for the price of one this Saturday","group":"Offer"},
+  {"id":"cta","type":"string","label":"Call to action","default":"Visit us on Main Street","group":"Offer"},
+  {"id":"accent","type":"color","label":"Accent","default":"#c45c26","group":"Look"},
+  {"id":"paper","type":"color","label":"Background","default":"#f6f0e6","group":"Look"},
+  {"id":"ink","type":"color","label":"Ink","default":"#1c1917","group":"Look"},
+  {"id":"endHold","type":"number","label":"End hold (seconds)","default":1.8,"min":0.5,"max":8,"step":0.1,"group":"Pace"}
+]'>
+<head>
+<meta charset="utf-8">
+<title>framehand · local-business</title>
+<script src="vendor/gsap.min.js"></script>
+<style id="om-fonts">
+@font-face { font-family: "Inter"; src: url("assets/fonts/Inter-var.woff") format("woff"); font-weight: 100 900; font-style: normal; }
+@font-face { font-family: "Poppins"; src: url("assets/fonts/Poppins-800.woff") format("woff"); font-weight: 800; font-style: normal; }
+</style>
+<style>
+  html, body { margin: 0; width: 100%; height: 100%; overflow: hidden; }
+  #film { position: relative; width: 100%; height: 100%; overflow: hidden; background: var(--paper); color: var(--ink); font-family: Inter, system-ui, sans-serif; }
+  .wash { position: absolute; inset: 0; background:
+      radial-gradient(900px 600px at 12% 18%, #ffffffaa, transparent 55%),
+      radial-gradient(700px 500px at 88% 90%, color-mix(in srgb, var(--accent) 18%, transparent), transparent 60%); }
+  .kicker { position: absolute; left: 140px; top: 260px; font-size: 22px; letter-spacing: 8px; text-transform: uppercase; color: var(--accent); font-weight: 600; }
+  .brand { position: absolute; margin: 0; left: 130px; top: 310px; width: 1600px; font-family: Poppins, Inter, sans-serif; font-size: 108px; line-height: 1.05; letter-spacing: -3px; font-weight: 800; }
+  .tag { position: absolute; left: 140px; top: 460px; font-size: 36px; opacity: .7; max-width: 1100px; }
+  .bar { position: absolute; left: 140px; top: 540px; width: 420px; height: 8px; background: var(--accent); transform-origin: 0 50%; }
+  .offer-card { position: absolute; left: 140px; top: 280px; width: 1400px; padding: 48px 56px; border-radius: 28px; background: #fff; box-shadow: 0 24px 60px #00000018; }
+  .offer-label { font-size: 20px; letter-spacing: 6px; text-transform: uppercase; color: var(--accent); font-weight: 700; margin-bottom: 18px; }
+  .offer { margin: 0; font-family: Poppins, Inter, sans-serif; font-size: 64px; line-height: 1.15; font-weight: 800; letter-spacing: -1.5px; }
+  .cta-wrap { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 28px; text-align: center; }
+  .cta-brand { font-size: 28px; letter-spacing: 6px; text-transform: uppercase; color: var(--accent); font-weight: 700; }
+  .cta { font-family: Poppins, Inter, sans-serif; font-size: 56px; font-weight: 800; max-width: 1400px; line-height: 1.2; }
+  .credit { position: absolute; left: 64px; bottom: 36px; font-size: 20px; opacity: .45; letter-spacing: 1px; }
+</style>
+</head>
+<body>
+<!--
+  Local business launch film (café / shop / salon).
+  Fill brandName, offer, cta — agent-friendly slots. Scenes: brand → offer → cta.
+-->
+<div id="film" data-composition-id="film" data-width="1920" data-height="1080">
+  <div class="wash"></div>
+
+  <section id="s-brand">
+    <div class="kicker" data-om-id="kicker">Local favourite</div>
+    <h1 class="brand" data-om-id="brandName" data-var-text="brandName">Corner Bakery</h1>
+    <div class="bar" data-om-id="bar"></div>
+    <div class="tag" data-om-id="tagline" data-var-text="tagline">Fresh bread, baked every morning</div>
+  </section>
+
+  <section id="s-offer" class="offer-card" data-om-id="offer">
+    <div class="offer-label">This weekend</div>
+    <p class="offer" data-var-text="offer">Two croissants for the price of one this Saturday</p>
+  </section>
+
+  <section id="s-cta" class="cta-wrap" data-om-id="cta">
+    <div class="cta-brand" data-var-text="brandName">Corner Bakery</div>
+    <div class="cta" data-var-text="cta">Visit us on Main Street</div>
+  </section>
+
+  <div class="credit" data-om-id="credit">made with framehand</div>
+</div>
+
+<script>
+  const V = OM.vars();
+  document.documentElement.style.setProperty('--accent', V.accent);
+  document.documentElement.style.setProperty('--paper', V.paper);
+  document.documentElement.style.setProperty('--ink', V.ink);
+
+  const tl = gsap.timeline({ paused: true, defaults: { ease: 'power3.out' } });
+
+  tl.addLabel('scene:brand', 0)
+    .fromTo('.kicker', { opacity: 0, y: -16 }, { opacity: 1, y: 0, duration: .5 }, .1)
+    .fromTo('.brand', { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: .9 }, .25)
+    .fromTo('.bar', { scaleX: 0 }, { scaleX: 1, duration: .7, ease: 'expo.inOut' }, .7)
+    .fromTo('.tag', { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: .6 }, 1.0)
+    .to('#s-brand', { opacity: 0, y: -28, duration: .45, ease: 'power2.in' }, 3.0);
+
+  tl.addLabel('scene:offer', 3.3)
+    .fromTo('#s-offer', { opacity: 0, y: 48, scale: .96 }, { opacity: 1, y: 0, scale: 1, duration: .8, ease: 'expo.out' }, 3.3)
+    .to('#s-offer', { opacity: 0, y: -24, duration: .4, ease: 'power2.in' }, 5.6);
+
+  tl.addLabel('scene:cta', 6.0)
+    .fromTo('#s-cta .cta-brand', { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: .5 }, 6.0)
+    .fromTo('#s-cta .cta', { opacity: 0, y: 28, scale: .97 }, { opacity: 1, y: 0, scale: 1, duration: .9, ease: 'expo.out' }, 6.2)
+    .fromTo('.credit', { opacity: 0 }, { opacity: .45, duration: .5 }, 6.8)
+    .to({}, { duration: V.endHold });
+
+  window.__timelines['film'] = tl;
+</script>
+</body>
+</html>

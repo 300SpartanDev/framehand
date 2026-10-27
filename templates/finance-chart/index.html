@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en" data-composition-variables='[
+  {"id":"title","type":"string","label":"Title (state the conclusion; ‘grew to’ and ‘grew by’ are different)","default":"Sample company: revenue grew 7.8× in five years","group":"Text"},
+  {"id":"unit","type":"string","label":"Subtitle: measure and unit","default":"Yearly revenue, billions","group":"Text"},
+  {"id":"source","type":"string","label":"Source (bottom left)","default":"Source: sample data — company and figures are made up","group":"Text"},
+  {"id":"badge","type":"string","label":"Corner badge (“Sample data” for made-up figures; empty for real data)","default":"Sample data","group":"Text"},
+  {"id":"series","type":"string","label":"Data (JSON list: [{\"label\":\"FY2021\",\"value\":16.68}, …]; candles need o/h/l/c each)","default":"[{\"label\":\"FY2021\",\"value\":16.68},{\"label\":\"FY2022\",\"value\":26.91},{\"label\":\"FY2023\",\"value\":26.97},{\"label\":\"FY2024\",\"value\":60.92},{\"label\":\"FY2025\",\"value\":130.5}]","group":"Data"},
+  {"id":"chart","type":"enum","label":"Chart type","default":"bar","options":[{"value":"bar","label":"Bars"},{"value":"line","label":"Line"},{"value":"candle","label":"Candles"}],"group":"Data"},
+  {"id":"decimals","type":"number","label":"Decimals","default":1,"min":0,"max":4,"step":1,"group":"Data"},
+  {"id":"prefix","type":"string","label":"Number prefix (e.g. $)","default":"","group":"Data"},
+  {"id":"suffix","type":"string","label":"Number suffix (e.g. %)","default":"","group":"Data"},
+  {"id":"highlightIndex","type":"number","label":"Item to call out (from 0; -1 = none)","default":4,"min":-1,"max":99,"step":1,"group":"Callout"},
+  {"id":"highlightText","type":"string","label":"Callout big text","default":"7.8×","group":"Callout"},
+  {"id":"highlightSub","type":"string","label":"Callout small text (the sum or the basis)","default":"130.5 ÷ 16.7","group":"Callout"},
+  {"id":"mainColor","type":"color","label":"Main colour (the called-out bar)","default":"#006BA2","group":"Colours"},
+  {"id":"dimColor","type":"color","label":"Colour of the other bars","default":"#C6D2D8","group":"Colours"},
+  {"id":"duration","type":"number","label":"Length (seconds; with a voiceover, at least until it ends)","default":7,"min":2,"max":120,"step":0.5,"group":"Pacing"},
+  {"id":"pace","type":"number","label":"Pace (1 = normal; 1.5 = every beat time × 1.5)","default":1,"min":0.5,"max":3,"step":0.1,"group":"Pacing"}
+]'>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1920, height=1080">
+<title>framehand · Finance chart</title>
+<script src="vendor/gsap.min.js"></script>
+<script src="vendor/om.js"></script>
+<style>
+  html, body { margin: 0; width: 100%; height: 100%; overflow: hidden; background: #fff; }
+  #film { position: relative; width: 100%; height: 100%; overflow: hidden; background: #fff; }
+  #c { position: absolute; inset: 0; display: block; width: 100%; height: 100%; }
+</style>
+</head>
+<body>
+<!--
+  Finance chart (t3, magazine style): layout first → axes → data grows in → call out one thing only. The numbers stay honest; animation only decides how they appear.
+  The whole film is the spec below, drawn on the canvas by vendor/clip (grammar: t3_finance_chart, from framehand, MIT).
+  - Variables fill the "{{…}}" placeholders in the spec. Timing and structure live in the cues: `at` is the second
+    the thing first shows; `word` anchors it to that word of the narration once `om voice` has run (see
+    skills/framehand/references/grammars.md).
+  - Pickable regions (ids follow the spec's 0-based indexes): title · unit · source · badge · bar-<i> (series[i];
+    point-<i> for a line, candle-<i> for candles) · highlight · number-<k>.
+  - Scenes (one label per beat): title → chart-1 → highlight-1.
+  - Fictional data keeps the "Sample data" badge in every frame; real data gets a real source and no badge.
+-->
+<div id="film" data-composition-id="film" data-start="0" data-width="1920" data-height="1080">
+  <!-- lang="en" on the canvas: symbols the fonts lack (−, ←, ∇) fall back to the same Latin system face as upstream; all Chinese is in the bundled fonts -->
+  <canvas id="c" lang="en" width="1920" height="1080" data-om-id="chart" data-layout-allow-overflow></canvas>
+</div>
+
+<script type="application/json" id="clip-spec">
+{
+  "grammar": "t3_finance_chart",
+  "duration": "{{duration}}",
+  "pace": "{{pace}}",
+  "fps": 30,
+  "data": {
+    "title": "{{title}}",
+    "unit": "{{unit}}",
+    "source": "{{source}}",
+    "badge": "{{badge}}",
+    "chart": "{{chart}}",
+    "series": "{{series|json}}",
+    "decimals": "{{decimals}}",
+    "prefix": "{{prefix}}",
+    "suffix": "{{suffix}}",
+    "highlight": { "index": "{{highlightIndex}}", "text": "{{highlightText}}", "sub": "{{highlightSub}}" },
+    "colors": { "main": "{{mainColor}}", "dim": "{{dimColor}}" }
+  },
+  "cues": [
+    { "at": 0.0, "kind": "title" },
+    { "at": 1.2, "kind": "bar", "word": "revenue" },
+    { "at": 4.4, "kind": "highlight", "word": "7.8" }
+  ]
+}
+</script>
+
+<script src="vendor/clip/lib/util.js"></script>
+<script src="vendor/clip/lib/paint.js"></script>
+<script src="vendor/clip/lib/kit.js"></script>
+<script src="vendor/clip/lib/motion.js"></script>
+<script src="vendor/clip/lib/camera.js"></script>
+<script src="vendor/clip/lib/diagram.js"></script>
+<script src="vendor/clip/lib/typo.js"></script>
+<script src="vendor/clip/lib/chart.js"></script>
+<script src="vendor/clip/lib/ui.js"></script>
+<script src="vendor/clip/lib/collage.js"></script>
+<script src="vendor/clip/lib/toon.js"></script>
+<script src="vendor/clip/cues.js"></script>
+<script src="vendor/clip/clip.js"></script>
+<script src="vendor/clip/grammars/t3_finance_chart.js"></script>
+<script>
+  const tl = gsap.timeline({ paused: true });
+  CLIP.mount({
+    id: 'film',
+    tl,
+    apply(spec) {
+      const d = spec.data, kind = d.chart || 'bar';
+      // the data cue draws the chart type the variable asks for
+      for (const q of spec.cues) if (['bar', 'line', 'candle'].includes(q.kind)) q.kind = kind;
+      if (!d.badge) delete d.badge;
+      if (d.highlight.index >= (d.series || []).length) CLIP.problem(`highlightIndex ${d.highlight.index} is past the number of data items (${(d.series || []).length} )`);
+      if (!(d.highlight.index >= 0 && d.highlight.index < (d.series || []).length)) { delete d.highlight; spec.cues = spec.cues.filter((q) => q.kind !== 'highlight'); }
+      // a line / K-line keeps its own red unless the main color was changed
+      if (kind !== 'bar' && d.colors.main.toLowerCase() === '#006ba2') delete d.colors.main;
+      if (!Array.isArray(d.series) || !d.series.length) CLIP.problem('series must be a non-empty list');
+      if (kind === 'candle' && d.series.some((r) => r.h == null)) CLIP.problem('each candle in series needs o / h / l / c');
+      return spec;
+    },
+  });
+  window.__timelines['film'] = tl;
+</script>
+</body>
+</html>

@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FRAMEHAND</title>
+<link rel="preload" href="/fonts/ArchivoBlack-400.woff" as="font" type="font/woff" crossorigin>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/app.css">
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-play" viewBox="0 0 24 24"><polygon points="6 3 20 12 6 21 6 3"/></symbol>
+  <symbol id="i-stop" viewBox="0 0 24 24"><rect x="5" y="5" width="14" height="14" rx="2"/></symbol>
+  <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></symbol>
+  <symbol id="i-copy" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></symbol>
+  <symbol id="i-download" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 10 5 5 5-5"/><path d="M12 15V3"/></symbol>
+  <symbol id="i-external" viewBox="0 0 24 24"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></symbol>
+  <symbol id="i-trash" viewBox="0 0 24 24"><path d="M3 6h18"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></symbol>
+  <symbol id="i-image" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.1-3.1a2 2 0 0 0-2.8 0L6 21"/></symbol>
+  <symbol id="i-upload" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m17 8-5-5-5 5"/><path d="M12 3v12"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></symbol>
+  <symbol id="i-phone" viewBox="0 0 24 24"><rect x="6" y="2" width="12" height="20" rx="2"/><path d="M11 18h2"/></symbol>
+  <symbol id="i-monitor" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="13" rx="2"/><path d="M8 21h8"/><path d="M12 17v4"/></symbol>
+  <symbol id="i-both" viewBox="0 0 24 24"><rect x="2" y="7" width="13" height="9" rx="1.5"/><rect x="17" y="4" width="5" height="16" rx="1.5"/></symbol>
+  <symbol id="i-square" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/></symbol>
+  <symbol id="i-shuffle" viewBox="0 0 24 24"><path d="M2 18h1.4c1.3 0 2.5-.6 3.3-1.7l6.1-8.6c.7-1.1 2-1.7 3.3-1.7H22"/><path d="m18 2 4 4-4 4"/><path d="M2 6h1.9c1.5 0 2.9.9 3.6 2.2"/><path d="M22 18h-5.9c-1.3 0-2.6-.7-3.3-1.8l-.5-.8"/><path d="m18 14 4 4-4 4"/></symbol>
+  <symbol id="i-layers" viewBox="0 0 24 24"><path d="m12 2 10 5-10 5L2 7l10-5z"/><path d="m2 17 10 5 10-5"/><path d="m2 12 10 5 10-5"/></symbol>
+  <symbol id="i-scan" viewBox="0 0 24 24"><path d="M3 7V5a2 2 0 0 1 2-2h2"/><path d="M17 3h2a2 2 0 0 1 2 2v2"/><path d="M21 17v2a2 2 0 0 1-2 2h-2"/><path d="M7 21H5a2 2 0 0 1-2-2v-2"/><path d="M7 12h10"/></symbol>
+  <symbol id="i-alert" viewBox="0 0 24 24"><path d="m21.7 18-8-14a2 2 0 0 0-3.5 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.7-3"/><path d="M12 9v4"/><path d="M12 17h.01"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+  <symbol id="i-scissors" viewBox="0 0 24 24"><circle cx="6" cy="6" r="3"/><path d="M8.1 8.1 12 12"/><path d="M20 4 8.1 15.9"/><circle cx="6" cy="18" r="3"/><path d="M14.8 14.8 20 20"/></symbol>
+  <symbol id="i-coffee" viewBox="0 0 24 24"><path d="M10 2v2"/><path d="M14 2v2"/><path d="M6 2v2"/><path d="M16 8a1 1 0 0 1 1 1v8a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V9a1 1 0 0 1 1-1h14a4 4 0 1 1 0 8h-1"/></symbol>
+  <symbol id="i-dumbbell" viewBox="0 0 24 24"><path d="M6.5 6.5v11"/><path d="M17.5 6.5v11"/><path d="M3.5 9v6"/><path d="M20.5 9v6"/><path d="M6.5 12h11"/></symbol>
+  <symbol id="i-bag" viewBox="0 0 24 24"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></symbol>
+  <symbol id="i-chev" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
+  <symbol id="i-archive" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="5" rx="1"/><path d="M4 8v11a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8"/><path d="M10 12h4"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M20 13c0 5-3.5 7.5-7.7 9a1 1 0 0 1-.6 0C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.2-2.7a1.2 1.2 0 0 1 1.6 0C14.5 3.8 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></symbol>
+  <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M3 12a9 9 0 0 1 9-9 9.8 9.8 0 0 1 6.7 2.7L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.8 9.8 0 0 1-6.7-2.7L3 16"/><path d="M8 16H3v5"/></symbol>
+</svg>
+
+<header class="bar">
+  <a class="wordmark" href="/" aria-label="FRAMEHAND home"><svg class="mark" viewBox="-10 -10 120 120" aria-hidden="true"><rect x="-10" y="-10" width="120" height="120" rx="18" fill="#F2F1EE"/><path d="M6 6H94V60L60 94H6Z" fill="#0B0B0C"/><path d="M40 32L68 50L40 68Z" fill="#F2F1EE"/><path d="M70 94L94 70V94Z" fill="#FF5A1F"/></svg>FRAMEHAND</a>
+  <span class="sep" aria-hidden="true"></span>
+  <span class="chip-status"><i aria-hidden="true"></i>On this computer · never posts</span>
+  <span class="spacer"></span>
+  <button class="setup-pill" id="setupPill" type="button" hidden><svg class="i"><use href="#i-alert"/></svg>Setup</button>
+  <span class="kbd-hint"><kbd id="kbdMod">Ctrl</kbd><kbd>↵</kbd> Make video</span>
+</header>
+
+<div class="setup" id="setupCard" role="status" hidden>
+  <svg class="i"><use href="#i-alert"/></svg>
+  <div class="grow">
+    <h3>Two minutes of setup first</h3>
+    <ul id="setupList"></ul>
+    <div class="ok" id="setupOk"></div>
+  </div>
+  <button class="btn sm" id="btnRecheck" type="button"><svg class="i"><use href="#i-refresh"/></svg>Check again</button>
+</div>
+
+<main class="layout" id="layout">
+  <aside class="panel left" aria-label="Your video">
+    <section class="block">
+      <div class="block-head"><h2><label for="brief">Describe your offer</label></h2><span class="count num" id="briefCount"></span></div>
+      <textarea id="brief" spellcheck="true" placeholder="Name, offer, and what people should do.
+Little Owl Café — 2 for 1 flat whites before 10am. Come by today"></textarea>
+      <p class="ex-label">Or start from an example</p>
+      <div class="examples" id="examples">
+        <button class="ex" type="button" data-ex="barber"><svg class="i"><use href="#i-scissors"/></svg>Barber</button>
+        <button class="ex" type="button" data-ex="cafe"><svg class="i"><use href="#i-coffee"/></svg>Café</button>
+        <button class="ex" type="button" data-ex="gym"><svg class="i"><use href="#i-dumbbell"/></svg>Gym</button>
+        <button class="ex" type="button" data-ex="shop"><svg class="i"><use href="#i-bag"/></svg>Shop</button>
+      </div>
+      <p class="hint">Any language works. Prices and numbers only appear if you write them.</p>
+    </section>
+
+    <section class="block">
+      <h2>Shape</h2>
+      <div class="seg" id="formatSeg" role="radiogroup" aria-label="Shape">
+        <button type="button" data-f="9:16" class="on" aria-label="Vertical (Reels/TikTok)"><svg class="i"><use href="#i-phone"/></svg>Vertical<small>9:16</small></button>
+        <button type="button" data-f="16:9" aria-label="Wide (YouTube/X)"><svg class="i"><use href="#i-monitor"/></svg>Wide<small>16:9</small></button>
+        <button type="button" data-f="both" aria-label="Both (makes two videos)"><svg class="i"><use href="#i-both"/></svg>Both<small>2 files</small></button>
+        <button type="button" data-f="1:1" aria-label="Square (feed post)"><svg class="i"><use href="#i-square"/></svg>Square<small>1:1</small></button>
+      </div>
+    </section>
+
+    <section class="block">
+      <h2>Brand</h2>
+      <div class="assets">
+        <div class="drop" id="logoDrop">
+          <label class="pick"><svg class="i"><use href="#i-upload"/></svg><strong>Logo</strong><span id="logoName">Drop, paste or click</span><img class="thumb" id="logoThumb" alt="Logo preview"><input type="file" id="logoFile" accept="image/png,image/jpeg,image/webp,image/gif,image/svg+xml,.svg,.heic,.heif,image/heic"></label>
+          <button type="button" class="rm" id="logoRm" title="Remove logo" aria-label="Remove logo"><svg class="i"><use href="#i-x"/></svg></button>
+        </div>
+        <div class="drop" id="shotDrop">
+          <label class="pick"><svg class="i"><use href="#i-image"/></svg><strong>Photo</strong><span id="shotName" title="Photo of your shop, product or app">Photo of your shop, product or app</span><img class="thumb" id="shotThumb" alt="Photo preview"><input type="file" id="shotFile" accept="image/png,image/jpeg,image/webp,image/gif,.heic,.heif,image/heic"></label>
+          <button type="button" class="rm" id="shotRm" title="Remove photo" aria-label="Remove photo"><svg class="i"><use href="#i-x"/></svg></button>
+        </div>
+      </div>
+      <div class="colors" id="colors" role="radiogroup" aria-label="Brand colour">
+        <span class="label">Colour</span>
+        <button type="button" class="sw auto on" data-c="" aria-label="Pick from the logo" title="Pick from the logo">AUTO</button>
+        <button type="button" class="sw" data-c="#ff5b1f" style="background:#ff5b1f" aria-label="Orange"></button>
+        <button type="button" class="sw" data-c="#e11d48" style="background:#e11d48" aria-label="Red"></button>
+        <button type="button" class="sw" data-c="#16a34a" style="background:#16a34a" aria-label="Green"></button>
+        <button type="button" class="sw" data-c="#2563eb" style="background:#2563eb" aria-label="Blue"></button>
+        <button type="button" class="sw" data-c="#111111" style="background:#111111" aria-label="Black"></button>
+        <label class="sw-custom" title="Your own colour"><input type="color" id="brandColor" value="#ff5b1f" aria-label="Your own colour"></label>
+      </div>
+      <div class="kit-row">
+        <label class="switch" for="rememberKit"><input type="checkbox" id="rememberKit"><span class="txt"><b>Remember my logo &amp; colour</b></span></label>
+        <button type="button" class="linkbtn" id="btnForgetKit" hidden>Forget</button>
+      </div>
+    </section>
+
+    <section class="block">
+      <label class="switch" for="music"><input type="checkbox" id="music" checked><span class="txt"><b>Music</b><small id="musicNote">Made on this computer to fit your brief</small></span></label>
+      <label class="switch" for="madeWith"><input type="checkbox" id="madeWith"><span class="txt"><b>“Made with FRAMEHAND”</b><small>A small mark on the video and in captions</small></span></label>
+    </section>
+
+    <section class="block">
+      <details class="more" id="more">
+        <summary><h2>More options</h2><svg class="i"><use href="#i-chev"/></svg></summary>
+        <div class="field"><span>Style</span><select id="look"><option value="auto">Auto — picked from your words</option></select></div>
+        <div class="field"><label for="seed">Variation</label>
+          <div class="seedrow"><input id="seed" type="text" inputmode="numeric" placeholder="Random"><button class="btn" type="button" id="btnRandSeed">New</button></div>
+        </div>
+        <p class="hint">Same number, same video. Change it for a different take on the same words.</p>
+        <div class="field"><span>Change what FRAMEHAND read</span>
+          <input id="brandName" type="text" placeholder="Business name">
+          <input id="offer" type="text" placeholder="Headline or offer">
+          <input id="cta" type="text" placeholder="What people should do — e.g. Book today">
+        </div>
+        <div class="field"><label for="brandUrl">Website</label><input id="brandUrl" type="url" placeholder="https://yourshop.com"></div>
+      </details>
+    </section>
+  </aside>
+
+  <section class="center" aria-label="Preview">
+    <div class="stagebar">
+      <div class="phase" aria-live="polite"><span class="dot" id="dot"></span><span id="phaseText">Ready when you are</span></div>
+      <div class="viewtools">
+        <div class="mini-seg" id="viewSeg" aria-label="Preview shape">
+          <button type="button" data-v="vertical" class="on" aria-label="Phone view"><svg class="i"><use href="#i-phone"/></svg>Phone</button>
+          <button type="button" data-v="wide" aria-label="Wide view"><svg class="i"><use href="#i-monitor"/></svg>Wide</button>
+        </div>
+        <button type="button" class="btn sm" id="btnSafe" aria-pressed="false" title="Show where TikTok and Reels put their buttons"><svg class="i"><use href="#i-scan"/></svg>Safe zones</button>
+      </div>
+    </div>
+
+    <div class="stage" id="stage">
+      <div class="frame vertical" id="frame">
+        <div class="empty" id="stageEmpty">
+          <div class="big">Your video<br>plays <em>here.</em></div>
+          <div class="steps">
+            <div><b>1</b>Describe your offer</div>
+            <div><b>2</b>Add a logo or photo, if you like</div>
+            <div><b>3</b>Press Make video</div>
+          </div>
+        </div>
+        <div class="skeleton" id="skeleton" hidden aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+        <img class="poster" id="poster" alt="" hidden>
+        <video id="player" controls playsinline preload="metadata" hidden></video>
+        <div class="overlay-msg" id="overlayMsg" hidden><span id="overlayText">Making your video</span></div>
+        <div class="safe" id="safe" hidden aria-hidden="true">
+          <div class="top"><span>App bar</span></div>
+          <div class="side"><span>Like · share buttons</span></div>
+          <div class="cap"><span>Caption &amp; name</span></div>
+        </div>
+      </div>
+      <div class="compare" id="compare" hidden></div>
+    </div>
+
+    <div class="stills" id="stills"></div>
+
+    <div class="progress" id="progress" hidden>
+      <div class="track" role="progressbar" aria-label="Progress" aria-valuemin="0" aria-valuemax="100" id="bar"><i id="barFill"></i></div>
+      <div class="progline">
+        <span class="frame-of num" id="progText">Getting ready</span>
+        <span class="left num" id="progLeft"></span>
+        <span class="grow"></span>
+        <button class="btn sm danger" id="btnStop" type="button"><svg class="i"><use href="#i-stop"/></svg>Stop</button>
+      </div>
+    </div>
+
+    <div class="actionbar">
+      <button class="btn primary" id="btnMake" type="button"><svg class="i"><use href="#i-play"/></svg>Make video</button>
+      <button class="btn big" id="btnPreview" type="button" title="Quick look (a few seconds)" aria-label="Quick look (a few seconds)"><svg class="i"><use href="#i-eye"/></svg>Quick look</button>
+      <button class="btn big" id="btnVariants" type="button"><svg class="i"><use href="#i-layers"/></svg>Make 3 versions</button>
+      <span class="grow"></span>
+      <button class="btn ghost" id="btnShuffle" type="button" aria-label="Try another style" title="Try another style"><svg class="i"><use href="#i-shuffle"/></svg><span>Try another style</span></button>
+    </div>
+    <div class="estimate num" id="estimate"></div>
+    <details class="logwrap"><summary>Details</summary><div class="log" id="log"></div></details>
+  </section>
+
+  <aside class="panel right" aria-label="Share and your videos">
+    <div class="tabs" role="tablist">
+      <button role="tab" id="tabShare" aria-selected="true" aria-controls="paneShare" type="button">Share</button>
+      <button role="tab" id="tabVideos" aria-selected="false" aria-controls="paneVideos" type="button">Your videos <span class="n num" id="videoCount">0</span></button>
+    </div>
+    <div class="pane" id="paneShare" role="tabpanel" aria-labelledby="tabShare">
+      <div class="nothing" id="shareEmpty"><b>Nothing to share yet.</b>Make a video and you get the right file and a caption for each app. You post it yourself.</div>
+      <ul class="plats off" id="platformsIdle"></ul>
+      <div id="shareBody" hidden>
+        <div class="result">
+          <div class="title-lg" id="resTitle"></div>
+          <div class="meta num" id="planMeta"></div>
+          <div class="row">
+            <a class="btn sm" id="btnDownload" href="#" download><svg class="i"><use href="#i-download"/></svg><span>Download MP4</span></a>
+            <a class="btn sm" id="btnDownloadV" href="#" download hidden><svg class="i"><use href="#i-download"/></svg><span>Download 9:16</span></a>
+            <a class="btn sm" id="btnZip" href="#" download><svg class="i"><use href="#i-archive"/></svg><span>Download all</span></a>
+          </div>
+          <div class="promise"><svg class="i"><use href="#i-shield"/></svg><span>Ready. Nothing is posted until you click Post on the app.</span></div>
+          <div class="hint" id="silentNote" hidden>This one is silent. Switch Music on for a soundtrack.</div>
+        </div>
+        <ul class="plats" id="platforms"></ul>
+      </div>
+    </div>
+    <div class="pane" id="paneVideos" role="tabpanel" aria-labelledby="tabVideos" hidden>
+      <div class="gallery" id="gallery"></div>
+    </div>
+  </aside>
+</main>
+
+<div class="dropzone" id="dropzone" hidden>
+  <div data-slot="logo"><svg class="i"><use href="#i-upload"/></svg>Logo<small>Drop here to use it as your logo</small></div>
+  <div data-slot="screenshot"><svg class="i"><use href="#i-image"/></svg>Photo<small>Drop here to show it big in the video</small></div>
+</div>
+<div class="toasts" id="toasts" aria-live="polite"></div>
+<script src="/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en" data-composition-variables='[
+  {"id":"eyebrow","type":"string","label":"Kicker (small text above the title)","default":"NEW RELEASE","group":"Title"},
+  {"id":"title","type":"string","label":"Title (a few words or a product name)","default":"Motion from a brief","group":"Title"},
+  {"id":"subtitle","type":"string","label":"Subtitle (one short sentence)","default":"One description, one frame-exact film","group":"Title"},
+  {"id":"card1Title","type":"string","label":"Card 1 title (empty = hidden)","default":"8 motion styles","group":"Cards"},
+  {"id":"card1Sub","type":"string","label":"Card 1 text","default":"From maths explainers to kinetic type","group":"Cards"},
+  {"id":"card1Icon","type":"enum","label":"Card 1 icon","default":"layers","options":[{"value":"layers"},{"value":"wave"},{"value":"memory"},{"value":"agent"},{"value":"clock"},{"value":"phone"},{"value":"chart"},{"value":"code"},{"value":"check"},{"value":"play"},{"value":"bolt"},{"value":"lock"},{"value":"none","label":"No icon (show the number)"}],"group":"Cards"},
+  {"id":"card2Title","type":"string","label":"Card 2 title (empty = hidden)","default":"Frame-exact timing","group":"Cards"},
+  {"id":"card2Sub","type":"string","label":"Card 2 text","default":"frames = seconds × frame rate","group":"Cards"},
+  {"id":"card2Icon","type":"enum","label":"Card 2 icon","default":"clock","options":[{"value":"layers"},{"value":"wave"},{"value":"memory"},{"value":"agent"},{"value":"clock"},{"value":"phone"},{"value":"chart"},{"value":"code"},{"value":"check"},{"value":"play"},{"value":"bolt"},{"value":"lock"},{"value":"none","label":"No icon (show the number)"}],"group":"Cards"},
+  {"id":"card2Value","type":"number","label":"Card 2 counting number","default":30,"step":"any","group":"Cards"},
+  {"id":"card2Suffix","type":"string","label":"Card 2 number suffix (type the space yourself)","default":" fps","group":"Cards"},
+  {"id":"card2Label","type":"string","label":"Card 2 text under the number","default":"default frame rate","group":"Cards"},
+  {"id":"card3Title","type":"string","label":"Card 3 title (empty = hidden)","default":"Wide and vertical","group":"Cards"},
+  {"id":"card3Sub","type":"string","label":"Card 3 text","default":"vertical gets its own layout","group":"Cards"},
+  {"id":"card3Icon","type":"enum","label":"Card 3 icon","default":"phone","options":[{"value":"layers"},{"value":"wave"},{"value":"memory"},{"value":"agent"},{"value":"clock"},{"value":"phone"},{"value":"chart"},{"value":"code"},{"value":"check"},{"value":"play"},{"value":"bolt"},{"value":"lock"},{"value":"none","label":"No icon (show the number)"}],"group":"Cards"},
+  {"id":"numberValue","type":"number","label":"Big number (lands when it is said)","default":7.8,"step":"any","group":"Big number"},
+  {"id":"numberDecimals","type":"number","label":"Big number decimals","default":1,"min":0,"max":4,"step":1,"group":"Big number"},
+  {"id":"numberPrefix","type":"string","label":"Big number prefix (e.g. $)","default":"","group":"Big number"},
+  {"id":"numberSuffix","type":"string","label":"Big number suffix (type the space yourself)","default":"×","group":"Big number"},
+  {"id":"numberCaption","type":"string","label":"Big number caption (say so if the data is made up)","default":"Sample company revenue growth over five years (sample data)","group":"Big number"},
+  {"id":"shotTitle","type":"string","label":"Screenshot card title (empty = hidden)","default":"Your product screen","group":"Screenshot card"},
+  {"id":"shotSub","type":"string","label":"Screenshot card text","default":"Sample screen — replace it with your own","group":"Screenshot card"},
+  {"id":"shotImage","type":"string","label":"Screenshot path (put it in assets/, relative to index.html)","default":"assets/sample-screen.png","group":"Screenshot card"},
+  {"id":"highlightRect","type":"string","label":"Box drawn on the screenshot (JSON [x, y, width, height], 0–1 of the picture; empty = none)","default":"[0.17, 0.09, 0.26, 0.15]","group":"Screenshot card"},
+  {"id":"accent","type":"color","label":"Accent colour (step numbers, boxes)","default":"#3d6bff","group":"Colours"},
+  {"id":"duration","type":"number","label":"Length (seconds; with a voiceover, at least until it ends)","default":10,"min":2,"max":120,"step":0.5,"group":"Pacing"},
+  {"id":"pace","type":"number","label":"Pace (1 = normal; launch films hold 5–8 s a screen, 1.5–2.5 is common)","default":1,"min":0.5,"max":4,"step":0.1,"group":"Pacing"}
+]'>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1920, height=1080">
+<title>framehand · Keynote launch</title>
+<script src="vendor/gsap.min.js"></script>
+<script src="vendor/om.js"></script>
+<style>
+  html, body { margin: 0; width: 100%; height: 100%; overflow: hidden; background: #050508; }
+  #film { position: relative; width: 100%; height: 100%; overflow: hidden; background: #050508; }
+  #c { position: absolute; inset: 0; display: block; width: 100%; height: 100%; }
+</style>
+</head>
+<body>
+<!--
+  Keynote launch (t2): dark glowing backdrop, one thing per screen; text floats out of a blur, cards are frosted glass that settle with a light bounce; a screenshot sits in a glass card with one part boxed; a big number gets its own screen.
+  The whole film is the spec below, drawn on the canvas by vendor/clip (grammar: t2_keynote_ui, from framehand, MIT).
+  - Variables fill the "{{…}}" placeholders. Timing and structure live in the cues: `at` is the second the thing first
+    shows (a number cue's `at` is when it lands; it starts counting 0.9 s earlier); `word` anchors it to that word of
+    the narration once `om voice` has run (skills/framehand/references/grammars.md).
+  - Consecutive cards without an image share one screen (up to 3); a card with `image` gets a screen of its own.
+  - Pickable regions (0-based like the spec): title · card-<i> (i-th card/step/image cue) · number-<k> · highlight-<k>.
+  - Scenes: title → cards-1 → number-1 → screenshot-1 → highlight-1.
+-->
+<div id="film" data-composition-id="film" data-start="0" data-width="1920" data-height="1080">
+  <!-- lang="en" on the canvas: symbols the fonts lack fall back to the same Latin system face as upstream; all Chinese is in the bundled fonts -->
+  <canvas id="c" lang="en" width="1920" height="1080" data-om-id="stage" data-layout-allow-overflow></canvas>
+</div>
+
+<script type="application/json" id="clip-spec">
+{
+  "grammar": "t2_keynote_ui",
+  "duration": "{{duration}}",
+  "pace": "{{pace}}",
+  "fps": 30,
+  "data": { "eyebrow": "{{eyebrow}}", "title": "{{title}}", "subtitle": "{{subtitle}}", "accent": "{{accent}}" },
+  "cues": [
+    { "at": 0.0, "kind": "title" },
+    { "at": 2.2, "kind": "card", "word": "styles", "text": "{{card1Title}}", "sub": "{{card1Sub}}", "data": { "icon": "{{card1Icon}}" } },
+    { "at": 3.0, "kind": "card", "word": "frame", "text": "{{card2Title}}", "sub": "{{card2Sub}}", "data": { "icon": "{{card2Icon}}", "value": "{{card2Value}}", "suffix": "{{card2Suffix}}", "label": "{{card2Label}}" } },
+    { "at": 3.8, "kind": "card", "word": "vertical", "text": "{{card3Title}}", "sub": "{{card3Sub}}", "data": { "icon": "{{card3Icon}}" } },
+    { "at": 6.0, "kind": "number", "word": "7.8", "text": "{{numberCaption}}", "data": { "value": "{{numberValue}}", "decimals": "{{numberDecimals}}", "prefix": "{{numberPrefix}}", "suffix": "{{numberSuffix}}" } },
+    { "at": 7.2, "kind": "card", "word": "screen", "text": "{{shotTitle}}", "sub": "{{shotSub}}", "image": "{{shotImage}}" },
+    { "at": 8.4, "kind": "highlight", "word": "times", "data": { "rect": "{{highlightRect|json}}" } }
+  ]
+}
+</script>
+
+<script src="vendor/clip/lib/util.js"></script>
+<script src="vendor/clip/lib/paint.js"></script>
+<script src="vendor/clip/lib/kit.js"></script>
+<script src="vendor/clip/lib/motion.js"></script>
+<script src="vendor/clip/lib/camera.js"></script>
+<script src="vendor/clip/lib/diagram.js"></script>
+<script src="vendor/clip/lib/typo.js"></script>
+<script src="vendor/clip/lib/chart.js"></script>
+<script src="vendor/clip/lib/ui.js"></script>
+<script src="vendor/clip/lib/collage.js"></script>
+<script src="vendor/clip/lib/toon.js"></script>
+<script src="vendor/clip/cues.js"></script>
+<script src="vendor/clip/clip.js"></script>
+<script src="vendor/clip/grammars/t2_keynote_ui.js"></script>
+<script>
+  const tl = gsap.timeline({ paused: true });
+  CLIP.mount({
+    id: 'film',
+    tl,
+    apply(spec) {
+      for (const q of spec.cues) {
+        if (q.data && q.data.icon === 'none') delete q.data.icon;
+        if (q.data && q.data.label === '') delete q.data.label;
+        if (q.kind === 'card' && 'image' in q && !q.image) delete q.image;   // no screenshot path → a plain feature card
+      }
+      // the box sits on a screenshot: drop it when there is no screenshot card or no rect
+      const hasShot = spec.cues.some((q) => q.image);
+      spec.cues = spec.cues.filter((q) => q.kind !== 'highlight' || (hasShot && Array.isArray(q.data && q.data.rect) && q.data.rect.length === 4));
+      return spec;
+    },
+  });
+  window.__timelines['film'] = tl;
+</script>
+</body>
+</html>

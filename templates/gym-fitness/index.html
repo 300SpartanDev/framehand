@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en" data-composition-variables='[
+  {"id":"brandName","type":"string","label":"Gym / studio name","default":"IRON CURRENT","group":"Brand"},
+  {"id":"hook","type":"string","label":"Opening hook","default":"Show up. Get strong.","group":"Brand"},
+  {"id":"offer","type":"string","label":"One offer","default":"30-day starter · first week free","group":"Offer"},
+  {"id":"cta","type":"string","label":"Call to action","default":"Book a free intro · ironcurrent.example","group":"Offer"},
+  {"id":"accent","type":"color","label":"Accent","default":"#ef4444","group":"Look"},
+  {"id":"paper","type":"color","label":"Background","default":"#09090b","group":"Look"},
+  {"id":"ink","type":"color","label":"Ink","default":"#fafafa","group":"Look"},
+  {"id":"endHold","type":"number","label":"End hold (seconds)","default":1.8,"min":0.5,"max":8,"step":0.1,"group":"Pace"}
+]'>
+<head>
+<meta charset="utf-8">
+<title>framehand · gym-fitness</title>
+<script src="vendor/gsap.min.js"></script>
+<style id="om-fonts">
+@font-face { font-family: "Inter"; src: url("assets/fonts/Inter-var.woff") format("woff"); font-weight: 100 900; font-style: normal; }
+@font-face { font-family: "Poppins"; src: url("assets/fonts/Poppins-800.woff") format("woff"); font-weight: 800; font-style: normal; }
+</style>
+<style>
+  html, body { margin: 0; width: 100%; height: 100%; overflow: hidden; }
+  #film { position: relative; width: 100%; height: 100%; overflow: hidden; background: var(--paper); color: var(--ink); font-family: Inter, system-ui, sans-serif; }
+  .slash { position: absolute; width: 140%; height: 180px; left: -10%; top: 38%; background: color-mix(in srgb, var(--accent) 85%, #000); transform: rotate(-8deg); opacity: .95; }
+  .brand { position: absolute; margin: 0; left: 120px; top: 300px; width: 1680px; font-family: Poppins, Inter, sans-serif; font-size: 128px; line-height: 1; letter-spacing: -4px; font-weight: 800; text-transform: uppercase; }
+  .hook { position: absolute; left: 130px; top: 470px; font-size: 40px; opacity: .8; letter-spacing: 1px; }
+  .badge { position: absolute; left: 130px; top: 220px; padding: 10px 22px; border: 2px solid var(--accent); color: var(--accent); font-size: 18px; letter-spacing: 5px; text-transform: uppercase; font-weight: 700; }
+  .offer-wrap { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: 20px; }
+  .offer-label { font-size: 22px; letter-spacing: 8px; text-transform: uppercase; color: var(--accent); font-weight: 700; }
+  .offer { margin: 0; font-family: Poppins, Inter, sans-serif; font-size: 80px; line-height: 1.1; font-weight: 800; letter-spacing: -2px; max-width: 1500px; text-transform: uppercase; }
+  .cta-wrap { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 26px; text-align: center; }
+  .cta-brand { font-size: 24px; letter-spacing: 8px; text-transform: uppercase; color: var(--accent); font-weight: 700; }
+  .cta { font-family: Poppins, Inter, sans-serif; font-size: 48px; font-weight: 800; max-width: 1400px; line-height: 1.2; }
+  .cta-pill { margin-top: 8px; padding: 18px 40px; background: var(--accent); color: #fff; border-radius: 999px; font-weight: 800; font-size: 28px; letter-spacing: 1px; }
+  .credit { position: absolute; left: 64px; bottom: 36px; font-size: 20px; opacity: .4; letter-spacing: 1px; }
+</style>
+</head>
+<body>
+<!--
+  Gym / fitness membership film.
+  Fill brandName, offer, cta. Scenes: brand → offer → cta.
+-->
+<div id="film" data-composition-id="film" data-width="1920" data-height="1080">
+  <div class="slash" data-om-id="slash"></div>
+
+  <section id="s-brand">
+    <div class="badge" data-om-id="badge">MEMBERSHIP</div>
+    <h1 class="brand" data-om-id="brandName" data-var-text="brandName">IRON CURRENT</h1>
+    <div class="hook" data-om-id="hook" data-var-text="hook">Show up. Get strong.</div>
+  </section>
+
+  <section id="s-offer" class="offer-wrap" data-om-id="offer">
+    <div class="offer-label">Limited offer</div>
+    <p class="offer" data-var-text="offer">30-day starter · first week free</p>
+  </section>
+
+  <section id="s-cta" class="cta-wrap" data-om-id="cta">
+    <div class="cta-brand" data-var-text="brandName">IRON CURRENT</div>
+    <div class="cta" data-var-text="cta">Book a free intro · ironcurrent.example</div>
+    <div class="cta-pill">START NOW</div>
+  </section>
+
+  <div class="credit" data-om-id="credit">made with framehand</div>
+</div>
+
+<script>
+  const V = OM.vars();
+  document.documentElement.style.setProperty('--accent', V.accent);
+  document.documentElement.style.setProperty('--paper', V.paper);
+  document.documentElement.style.setProperty('--ink', V.ink);
+
+  const tl = gsap.timeline({ paused: true, defaults: { ease: 'power3.out' } });
+
+  tl.addLabel('scene:brand', 0)
+    .fromTo('.slash', { scaleX: 0, opacity: 0 }, { scaleX: 1, opacity: .95, duration: .7, ease: 'expo.out' }, 0)
+    .fromTo('.badge', { opacity: 0, y: -12 }, { opacity: 1, y: 0, duration: .4 }, .35)
+    .fromTo('.brand', { opacity: 0, x: -40 }, { opacity: 1, x: 0, duration: .8, ease: 'expo.out' }, .45)
+    .fromTo('.hook', { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: .55 }, 1.0)
+    .to('#s-brand', { opacity: 0, duration: .4, ease: 'power2.in' }, 3.0)
+    .to('.slash', { opacity: 0, duration: .35 }, 3.0);
+
+  tl.addLabel('scene:offer', 3.3)
+    .fromTo('#s-offer', { opacity: 0, scale: .92 }, { opacity: 1, scale: 1, duration: .75, ease: 'expo.out' }, 3.3)
+    .to('#s-offer', { opacity: 0, y: -16, duration: .35, ease: 'power2.in' }, 5.4);
+
+  tl.addLabel('scene:cta', 5.8)
+    .fromTo('#s-cta .cta-brand', { opacity: 0 }, { opacity: 1, duration: .4 }, 5.8)
+    .fromTo('#s-cta .cta', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: .7 }, 6.0)
+    .fromTo('#s-cta .cta-pill', { opacity: 0, scale: .9 }, { opacity: 1, scale: 1, duration: .5, ease: 'back.out(1.6)' }, 6.4)
+    .fromTo('.credit', { opacity: 0 }, { opacity: .4, duration: .45 }, 6.7)
+    .to({}, { duration: V.endHold });
+
+  window.__timelines['film'] = tl;
+</script>
+</body>
+</html>

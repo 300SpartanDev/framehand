@@ -1,0 +1,22 @@
+{
+  "title": "Gym / fitness membership",
+  "summary": "Membership / transformation style film: gym brand, one offer (trial or challenge), one CTA. Bold, high-energy look.",
+  "best_for": [
+    "gym membership drives",
+    "30-day challenges",
+    "PT / studio launches",
+    "transformation campaign teasers"
+  ],
+  "aspect": "16:9",
+  "niche": "gym-fitness",
+  "copy": {
+    "templates/blank/vendor/gsap.min.js": "vendor/gsap.min.js",
+    "templates/blank/vendor/GSAP-LICENSE.txt": "vendor/GSAP-LICENSE.txt",
+    "templates/blank/vendor/GSAP-LICENSE.html": "vendor/GSAP-LICENSE.html",
+    "fonts/Inter-var.woff": "assets/fonts/Inter-var.woff",
+    "fonts/Poppins-700.woff": "assets/fonts/Poppins-700.woff",
+    "fonts/Poppins-800.woff": "assets/fonts/Poppins-800.woff",
+    "fonts/OFL.txt": "assets/fonts/OFL.txt",
+    "fonts/LICENSES.md": "assets/fonts/LICENSES.md"
+  }
+}

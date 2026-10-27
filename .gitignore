@@ -1,0 +1,41 @@
+_private/
+.cache/
+outputs/
+dist/
+__pycache__/
+*.pyc
+.DS_Store
+.env*
+!.env.example
+_archive/
+.hyperframes/
+.thumbnails/
+out/
+.om/
+snapshots/
+node_modules/
+
+# process materials, kept locally, not published
+legacy/
+docs/internal/
+docs/research/
+docs/engine-plan-202610.md
+docs/10X_PLAN.md
+.last-update-check
+
+# local fork test output
+.fork-artifacts/
+
+# local UI / batch outputs
+.framehand-ui-work/
+framehand-batch/
+.fork-artifacts/
+
+# ffmpeg / ffprobe the user drops in for run_ui.command
+/bin/
+
+# user data (the app now keeps it outside the project; these catch older copies)
+/data/
+uploads/
+last.json
+brand-kit.json

@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en" data-composition-variables='[
+  {"id":"title","type":"string","label":"Title (ask first, then show)","default":"Gradient descent: every step goes downhill","group":"Text"},
+  {"id":"eq1","type":"string","label":"Formula 1 (single letters turn italic)","default":"L(θ)","group":"Formula"},
+  {"id":"eq2","type":"string","label":"Formula 2 (morphs from formula 1: matching symbols move)","default":"θ ← θ − η∇L","group":"Formula"},
+  {"id":"mathColors","type":"string","label":"Symbol colours (JSON: symbol → colour name or #hex; colour = idea)","default":"{\"L\":\"BLUE_C\",\"θ\":\"YELLOW\",\"η\":\"GREEN_C\"}","group":"Formula"},
+  {"id":"point1","type":"string","label":"Point 1 (empty = hidden)","default":"Find the slope here, ∇L","group":"Text"},
+  {"id":"point2","type":"string","label":"Point 2 (empty = hidden)","default":"Take a small step the other way, of size η","group":"Text"},
+  {"id":"highlightIndex","type":"number","label":"Point to box at the end (from 0; -1 = none)","default":1,"min":-1,"max":9,"step":1,"group":"Text"},
+  {"id":"curve1Label","type":"string","label":"Curve 1 label","default":"Loss L(θ)","group":"Curves"},
+  {"id":"curve1","type":"string","label":"Curve 1 data (JSON: evenly spaced y values)","default":"[9, 5.8, 3.4, 1.8, 1.0, 0.8, 1.0, 1.8, 3.4, 5.8, 9]","group":"Curves"},
+  {"id":"curve1Color","type":"color","label":"Curve 1 colour","default":"#2dcff4","group":"Curves"},
+  {"id":"curve2Label","type":"string","label":"Curve 2 label (morphs from curve 1)","default":"Loss while training","group":"Curves"},
+  {"id":"curve2","type":"string","label":"Curve 2 data (JSON: evenly spaced y values)","default":"[9, 6.2, 4.4, 3.2, 2.4, 1.9, 1.55, 1.3, 1.15, 1.05, 1.0]","group":"Curves"},
+  {"id":"curve2Color","type":"color","label":"Curve 2 colour","default":"#2fddb2","group":"Curves"},
+  {"id":"duration","type":"number","label":"Length (seconds; with a voiceover, at least until it ends)","default":10,"min":2,"max":120,"step":0.5,"group":"Pacing"},
+  {"id":"pace","type":"number","label":"Pace (1 = normal; 2–3 is common, hold about 1 s after each animation)","default":1,"min":0.5,"max":4,"step":0.1,"group":"Pacing"}
+]'>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1920, height=1080">
+<title>framehand · Maths explainer</title>
+<script src="vendor/gsap.min.js"></script>
+<script src="vendor/om.js"></script>
+<style>
+  html, body { margin: 0; width: 100%; height: 100%; overflow: hidden; background: #000; }
+  #film { position: relative; width: 100%; height: 100%; overflow: hidden; background: #000; }
+  #c { position: absolute; inset: 0; display: block; width: 100%; height: 100%; }
+</style>
+</head>
+<body>
+<!--
+  Maths explainer (t1): pure black, only the thing being explained is on screen; text and formulas are written on, one idea transforms into the next. Colour = the name of an idea.
+  The whole film is the spec below, drawn on the canvas by vendor/clip (grammar: t1_3b1b, from framehand, MIT).
+  - Variables fill the "{{…}}" placeholders. Timing and structure live in the cues: `at` is the second the thing first
+    shows; `word` anchors it to that word of the narration once `om voice` has run (skills/framehand/references/grammars.md).
+  - An equation cue keeps hand-spaced `tokens` while its text equals `tokensFor`; edit the variable and the tokens are rebuilt
+    from the text (single letters italic, words upright, the symbol colours from mathColors).
+  - Pickable regions (0-based like the spec): title · equation · curve · point-<i>.
+  - Scenes (one label per beat): title → equation-1 → curve-1 → equation-2 → point-1 → point-2 → curve-2 → highlight-1.
+-->
+<div id="film" data-composition-id="film" data-start="0" data-width="1920" data-height="1080">
+  <!-- lang="en" on the canvas: symbols the fonts lack (−, ←, ∇) fall back to the same Latin system face as upstream; all Chinese is in the bundled fonts -->
+  <canvas id="c" lang="en" width="1920" height="1080" data-om-id="board" data-layout-allow-overflow></canvas>
+</div>
+
+<script type="application/json" id="clip-spec">
+{
+  "grammar": "t1_3b1b",
+  "duration": "{{duration}}",
+  "pace": "{{pace}}",
+  "fps": 30,
+  "cues": [
+    { "at": 0.0, "kind": "title", "text": "{{title}}" },
+    { "at": 1.2, "kind": "equation", "word": "loss", "text": "{{eq1}}", "data": { "tokensFor": "L(θ)", "tokens": [
+      { "s": "L", "it": true, "col": "BLUE_C" }, { "s": "(", "gap": 4 }, { "s": "θ", "it": true, "col": "YELLOW", "gap": 4 }, { "s": ")" } ] } },
+    { "at": 2.0, "kind": "line", "word": "curve", "text": "{{curve1Label}}", "data": { "values": "{{curve1|json}}", "color": "{{curve1Color}}" } },
+    { "at": 3.6, "kind": "equation", "word": "update", "text": "{{eq2}}", "data": { "tokensFor": "θ ← θ − η∇L", "tokens": [
+      { "s": "θ", "it": true, "col": "YELLOW" }, { "s": "←", "gap": 18 }, { "s": "θ", "it": true, "col": "YELLOW", "gap": 14 },
+      { "s": "−", "gap": 14 }, { "s": "η", "it": true, "col": "GREEN_C", "gap": 8 }, { "s": "∇", "gap": 4 }, { "s": "L", "it": true, "col": "BLUE_C" } ] } },
+    { "at": 4.6, "kind": "point", "word": "slope", "text": "{{point1}}" },
+    { "at": 5.8, "kind": "point", "word": "other", "text": "{{point2}}" },
+    { "at": 7.0, "kind": "line", "word": "training", "text": "{{curve2Label}}", "data": { "values": "{{curve2|json}}", "color": "{{curve2Color}}" } },
+    { "at": 8.4, "kind": "highlight", "word": "step", "data": { "index": "{{highlightIndex}}" } }
+  ]
+}
+</script>
+
+<script src="vendor/clip/lib/util.js"></script>
+<script src="vendor/clip/lib/paint.js"></script>
+<script src="vendor/clip/lib/kit.js"></script>
+<script src="vendor/clip/lib/motion.js"></script>
+<script src="vendor/clip/lib/camera.js"></script>
+<script src="vendor/clip/lib/diagram.js"></script>
+<script src="vendor/clip/lib/typo.js"></script>
+<script src="vendor/clip/lib/chart.js"></script>
+<script src="vendor/clip/lib/ui.js"></script>
+<script src="vendor/clip/lib/collage.js"></script>
+<script src="vendor/clip/lib/toon.js"></script>
+<script src="vendor/clip/cues.js"></script>
+<script src="vendor/clip/clip.js"></script>
+<script src="vendor/clip/grammars/t1_3b1b.js"></script>
+<script>
+  // Text → equation tokens: single letters italic, letter runs (softmax) upright, a little air around operators.
+  const OPS = /^[←→⇒=≈≠<>≤≥+−×÷·-]$/;
+  function mathTokens(text, colors) {
+    const parts = (String(text).match(/[A-Za-z]{2,}|\S/gu) || []).flatMap((s) => (s.length > 1 && !/[a-z]/.test(s) ? [...s] : [s]));
+    const toks = parts.map((s) => ({ s, it: /^[a-zA-Zα-ωΑ-Ω]$/.test(s) && s !== '∇', ...(colors[s] ? { col: colors[s] } : {}) }));
+    toks.forEach((tk, i) => { if (OPS.test(tk.s)) { tk.gap = 14; if (i) toks[i - 1].gap = 14; } });
+    return toks;
+  }
+
+  const tl = gsap.timeline({ paused: true });
+  CLIP.mount({
+    id: 'film',
+    tl,
+    apply(spec, V) {
+      const colors = CLIP.json(V.mathColors, {}, 'mathColors') || {};
+      for (const q of spec.cues) {
+        if (q.kind === 'equation') {
+          if (!q.data || q.text !== q.data.tokensFor) q.data = { tokens: mathTokens(q.text, colors) };
+          else q.data.tokens = q.data.tokens.map((tk) => (colors[tk.s] ? { ...tk, col: colors[tk.s] } : tk));
+        }
+        if (q.kind === 'line' && !Array.isArray(q.data.values)) CLIP.problem('curve data must be a list of numbers, e.g. [9, 5, 3, 2]');
+      }
+      const points = spec.cues.filter((q) => q.kind === 'point').length;
+      for (const q of spec.cues) if (q.kind === 'highlight' && q.data.index >= points) CLIP.problem(`highlightIndex ${q.data.index} is past the number of points (${points} )`);
+      spec.cues = spec.cues.filter((q) => !(q.kind === 'equation' && !String(q.text || '').trim()) && !(q.kind === 'highlight' && !(q.data.index >= 0 && q.data.index < points)));
+      return spec;
+    },
+  });
+  window.__timelines['film'] = tl;
+</script>
+</body>
+</html>

@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en" data-composition-variables='[
+  {"id":"brandName","type":"string","label":"Brokerage / agent name","default":"NORTHLINE REALTY","group":"Brand"},
+  {"id":"listingTitle","type":"string","label":"Listing headline","default":"18 Harbor View","group":"Listing"},
+  {"id":"listingSub","type":"string","label":"Beds / baths / area","default":"4 bed · 3 bath · waterfront","group":"Listing"},
+  {"id":"offer","type":"string","label":"One offer (price or open house)","default":"Open house Sat 11–2 · $1.85M","group":"Offer"},
+  {"id":"cta","type":"string","label":"Call to action","default":"Tour today · northline.example/18harbor","group":"Offer"},
+  {"id":"accent","type":"color","label":"Accent","default":"#3b82f6","group":"Look"},
+  {"id":"paper","type":"color","label":"Background","default":"#0b1220","group":"Look"},
+  {"id":"ink","type":"color","label":"Ink","default":"#f8fafc","group":"Look"},
+  {"id":"endHold","type":"number","label":"End hold (seconds)","default":1.8,"min":0.5,"max":8,"step":0.1,"group":"Pace"}
+]'>
+<head>
+<meta charset="utf-8">
+<title>framehand · real-estate</title>
+<script src="vendor/gsap.min.js"></script>
+<style id="om-fonts">
+@font-face { font-family: "Inter"; src: url("assets/fonts/Inter-var.woff") format("woff"); font-weight: 100 900; font-style: normal; }
+@font-face { font-family: "Poppins"; src: url("assets/fonts/Poppins-800.woff") format("woff"); font-weight: 800; font-style: normal; }
+</style>
+<style>
+  html, body { margin: 0; width: 100%; height: 100%; overflow: hidden; }
+  #film { position: relative; width: 100%; height: 100%; overflow: hidden; background: var(--paper); color: var(--ink); font-family: Inter, system-ui, sans-serif; }
+  .grid { position: absolute; inset: 0; background-image:
+      linear-gradient(rgba(255,255,255,.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,.04) 1px, transparent 1px);
+    background-size: 80px 80px; opacity: .55; }
+  .glow { position: absolute; width: 700px; height: 700px; border-radius: 50%; background: color-mix(in srgb, var(--accent) 28%, transparent); filter: blur(80px); left: 60%; top: 20%; }
+  .agent { position: absolute; left: 140px; top: 220px; font-size: 20px; letter-spacing: 7px; text-transform: uppercase; color: var(--accent); font-weight: 600; }
+  .listing { position: absolute; margin: 0; left: 130px; top: 280px; width: 1600px; font-family: Poppins, Inter, sans-serif; font-size: 120px; line-height: 1.02; letter-spacing: -4px; font-weight: 800; }
+  .sub { position: absolute; left: 140px; top: 450px; font-size: 36px; opacity: .72; }
+  .rule { position: absolute; left: 140px; top: 530px; width: 280px; height: 4px; background: var(--accent); transform-origin: 0 50%; }
+  .offer-block { position: absolute; left: 140px; right: 140px; top: 360px; text-align: left; }
+  .offer-label { font-size: 20px; letter-spacing: 6px; text-transform: uppercase; color: var(--accent); font-weight: 700; margin-bottom: 20px; }
+  .offer { margin: 0; font-family: Poppins, Inter, sans-serif; font-size: 72px; line-height: 1.15; font-weight: 800; letter-spacing: -1.5px; max-width: 1500px; }
+  .cta-wrap { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: flex-start; justify-content: center; padding-left: 140px; gap: 24px; }
+  .cta-brand { font-size: 22px; letter-spacing: 6px; text-transform: uppercase; color: var(--accent); font-weight: 700; }
+  .cta { font-family: Poppins, Inter, sans-serif; font-size: 52px; font-weight: 800; max-width: 1400px; line-height: 1.2; }
+  .credit { position: absolute; left: 64px; bottom: 36px; font-size: 20px; opacity: .4; letter-spacing: 1px; }
+</style>
+</head>
+<body>
+<!--
+  Real estate listing / open-house film.
+  Fill brandName, listingTitle, offer, cta. Scenes: listing → offer → cta.
+-->
+<div id="film" data-composition-id="film" data-width="1920" data-height="1080">
+  <div class="grid"></div>
+  <div class="glow"></div>
+
+  <section id="s-listing">
+    <div class="agent" data-om-id="brandName" data-var-text="brandName">NORTHLINE REALTY</div>
+    <h1 class="listing" data-om-id="listingTitle" data-var-text="listingTitle">18 Harbor View</h1>
+    <div class="rule" data-om-id="rule"></div>
+    <div class="sub" data-om-id="listingSub" data-var-text="listingSub">4 bed · 3 bath · waterfront</div>
+  </section>
+
+  <section id="s-offer" class="offer-block" data-om-id="offer">
+    <div class="offer-label">This weekend</div>
+    <p class="offer" data-var-text="offer">Open house Sat 11–2 · $1.85M</p>
+  </section>
+
+  <section id="s-cta" class="cta-wrap" data-om-id="cta">
+    <div class="cta-brand" data-var-text="brandName">NORTHLINE REALTY</div>
+    <div class="cta" data-var-text="cta">Tour today · northline.example/18harbor</div>
+  </section>
+
+  <div class="credit" data-om-id="credit">made with framehand</div>
+</div>
+
+<script>
+  const V = OM.vars();
+  document.documentElement.style.setProperty('--accent', V.accent);
+  document.documentElement.style.setProperty('--paper', V.paper);
+  document.documentElement.style.setProperty('--ink', V.ink);
+
+  const tl = gsap.timeline({ paused: true, defaults: { ease: 'power3.out' } });
+
+  tl.addLabel('scene:listing', 0)
+    .fromTo('.agent', { opacity: 0, x: -20 }, { opacity: 1, x: 0, duration: .5 }, .1)
+    .fromTo('.listing', { opacity: 0, y: 36 }, { opacity: 1, y: 0, duration: .9 }, .25)
+    .fromTo('.rule', { scaleX: 0 }, { scaleX: 1, duration: .6, ease: 'expo.inOut' }, .8)
+    .fromTo('.sub', { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: .55 }, 1.0)
+    .to('#s-listing', { opacity: 0, y: -24, duration: .4, ease: 'power2.in' }, 3.1);
+
+  tl.addLabel('scene:offer', 3.4)
+    .fromTo('#s-offer', { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: .75, ease: 'expo.out' }, 3.4)
+    .to('#s-offer', { opacity: 0, y: -20, duration: .4, ease: 'power2.in' }, 5.5);
+
+  tl.addLabel('scene:cta', 5.9)
+    .fromTo('#s-cta .cta-brand', { opacity: 0 }, { opacity: 1, duration: .45 }, 5.9)
+    .fromTo('#s-cta .cta', { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: .85, ease: 'expo.out' }, 6.1)
+    .fromTo('.credit', { opacity: 0 }, { opacity: .4, duration: .5 }, 6.6)
+    .to({}, { duration: V.endHold });
+
+  window.__timelines['film'] = tl;
+</script>
+</body>
+</html>
