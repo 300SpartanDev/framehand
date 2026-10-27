@@ -19,6 +19,17 @@
 
 ---
 
+## What FRAMEHAND does
+
+FRAMEHAND is a free app for small businesses (cafés, barbershops, gyms, shops, salons) that turns **one plain sentence** into a **branded promo video** for social media. No editing skills and no templates to fight with.
+
+- **One line in, a video out.** Write something like *"Little Owl Café. 2 for 1 flat whites before 10am. Come by today"* and FRAMEHAND writes the scenes, animates them and adds music.
+- **Your brand, not a template.** Add your logo and a photo. FRAMEHAND picks up your colours and puts your logo in every video, so it doesn't look like everyone else's CapCut or Canva post.
+- **Every shape you need.** Vertical 9:16 for Reels, TikTok and YouTube Shorts, and wide 16:9 for X, LinkedIn and YouTube, from the same brief.
+- **Ready-to-post captions.** A share pack for X, Instagram, TikTok, YouTube Shorts and LinkedIn: the video, a caption written for each app, and one click to open its upload page.
+- **Any language.** Briefs, captions and on-screen text work in many languages and alphabets, including accents and right-to-left scripts.
+- **Private and yours.** It runs on your own laptop. Nothing is uploaded, there's no account, and it **never posts for you**: you always press Post yourself.
+
 ## Easiest install (Mac)
 
 Open **Terminal**, paste this line, and press Enter:
