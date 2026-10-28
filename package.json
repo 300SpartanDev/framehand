@@ -25,7 +25,7 @@
     "README.md"
   ],
   "scripts": {
-    "test": "node --import ./test/setup.mjs --test test/*.test.js",
+    "test": "node --import ./test/setup.mjs --test --test-concurrency=1 test/*.test.js",
     "clean": "node cli/om.js reset --yes"
   },
   "keywords": [
