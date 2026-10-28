@@ -2,7 +2,8 @@
 //   1. OM_CHROME (a path)
 //   2. an installed Chrome / Chromium / Edge / Brave
 import { spawnSync } from 'node:child_process';
-import { existsSync } from 'node:fs';
+import { existsSync, readdirSync } from 'node:fs';
+import { dirname } from 'node:path';
 import { homedir } from 'node:os';
 
 const APPS = [
@@ -32,6 +33,11 @@ export function findChrome(opts) {
 }
 
 export function chromeVersion(exe) {
+  // On Windows chrome.exe / msedge.exe print nothing for --version (they would open a window instead); the install
+  // folder holds a folder named after the version.
+  if (process.platform === 'win32') {
+    try { return readdirSync(dirname(exe)).filter((n) => /^\d+\.\d+\.\d+\.\d+$/.test(n)).sort((a, b) => b.localeCompare(a, undefined, { numeric: true }))[0] || null; } catch { return null; }
+  }
   const r = spawnSync(exe, ['--version'], { encoding: 'utf8', timeout: 10_000 });
   return /(\d+\.\d+\.\d+\.\d+)/.exec(r.stdout || '')?.[1] || null;
 }

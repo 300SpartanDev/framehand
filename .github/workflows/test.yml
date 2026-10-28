@@ -38,8 +38,11 @@ jobs:
           "$env:ChocolateyInstall\bin" | Out-File -Append -Encoding utf8 $env:GITHUB_PATH
       - name: Doctor
         run: node cli/om.js doctor
-      - name: Render a short film
+      - name: Render a short film (in Edge, the browser every Windows PC has)
+        env:
+          OM_CHROME: C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe
         run: |
+          node cli/om.js doctor
           node cli/om.js new "$env:RUNNER_TEMP\fh-blank" --template blank
           node cli/om.js render "$env:RUNNER_TEMP\fh-blank" --silent
           if ($LASTEXITCODE -ne 0) { exit 1 }
