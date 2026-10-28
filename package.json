@@ -1,6 +1,6 @@
 {
   "name": "framehand",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "description": "FRAMEHAND — turn one line about your business into a short, unique promo video. Runs on your own computer; never posts for you.",
   "type": "module",
   "bin": {
