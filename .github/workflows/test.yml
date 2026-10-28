@@ -19,3 +19,51 @@ jobs:
         run: npm test
       - name: Clip runtime tests
         run: node --test runtime/clip/test/*.test.js
+
+  # Windows smoke test: the real Windows path a user takes (Edge/Chrome, FFmpeg on PATH, run_ui.cmd, install.ps1), not the full suite.
+  windows:
+    runs-on: windows-latest
+    timeout-minutes: 20
+    env:
+      FRAMEHAND_NO_PAUSE: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Install FFmpeg
+        run: |
+          if (-not (Get-Command ffprobe -ErrorAction SilentlyContinue)) { choco install ffmpeg -y --no-progress }
+          Import-Module "$env:ChocolateyInstall\helpers\chocolateyProfile.psm1"; refreshenv
+          "$env:ChocolateyInstall\bin" | Out-File -Append -Encoding utf8 $env:GITHUB_PATH
+      - name: Doctor
+        run: node cli/om.js doctor
+      - name: Render a short film
+        run: |
+          node cli/om.js new "$env:RUNNER_TEMP\fh-blank" --template blank
+          node cli/om.js render "$env:RUNNER_TEMP\fh-blank" --silent
+          if ($LASTEXITCODE -ne 0) { exit 1 }
+          $mp4 = Get-ChildItem "$env:RUNNER_TEMP\fh-blank\out\*.mp4"
+          if (-not $mp4) { throw 'no mp4 rendered' }
+          ffprobe -v error -show_entries format=duration -of csv=p=0 $mp4[0].FullName
+      - name: run_ui.cmd starts the app
+        run: |
+          $p = Start-Process -FilePath cmd.exe -ArgumentList '/c', 'run_ui.cmd', '--no-open' -PassThru -NoNewWindow
+          $ok = $false
+          for ($i = 0; $i -lt 30 -and -not $ok; $i++) {
+            Start-Sleep 1
+            try { $ok = (Invoke-WebRequest -UseBasicParsing http://127.0.0.1:7870/).StatusCode -eq 200 } catch {}
+          }
+          taskkill /PID $p.Id /T /F | Out-Null
+          if (-not $ok) { throw 'the app did not answer on http://127.0.0.1:7870/' }
+          'app answered 200'
+      - name: install.ps1 (downloads main, makes the Desktop shortcut)
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        env:
+          FRAMEHAND_NO_LAUNCH: '1'
+        run: |
+          Get-Content -Raw .\install.ps1 | Invoke-Expression
+          if (-not (Test-Path "$env:USERPROFILE\Framehand\run_ui.cmd")) { throw 'not installed' }
+          $desk = [Environment]::GetFolderPath('Desktop')
+          if (-not ((Test-Path "$desk\Start Framehand.lnk") -or (Test-Path "$desk\Start Framehand.cmd"))) { throw 'no Desktop shortcut' }
+          node "$env:USERPROFILE\Framehand\cli\om.js" doctor

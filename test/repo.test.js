@@ -55,3 +55,12 @@ test('CI runs the tests on Node 22', () => {
   const y = read('.github/workflows/test.yml');
   assert.match(y, /node-version: 22/); assert.match(y, /npm test/); assert.match(y, /npm ci/);
 });
+
+test('Windows: run_ui.cmd checks Node, FFmpeg and a browser before opening; install.ps1 uses winget', () => {
+  const s = read('run_ui.cmd');
+  assert.match(s, /where ffmpeg/); assert.match(s, /where ffprobe/); assert.match(s, /findChrome/);
+  assert.ok(s.indexOf('findChrome') < s.indexOf('node cli/om.js ui'));
+  assert.ok(s.includes('\r\n'), 'Windows line endings');
+  const p = read('install.ps1');
+  for (const id of ['OpenJS.NodeJS.LTS', 'Gyan.FFmpeg', 'archive/refs/heads/main.zip', 'Start Framehand']) assert.ok(p.includes(id), id);
+});

@@ -40,6 +40,16 @@ curl -fsSL https://raw.githubusercontent.com/300SpartanDev/framehand/main/instal
 
 It downloads FRAMEHAND, installs what it needs, and puts a **Start Framehand** icon on your Desktop. To update later, run the same line again; your videos are kept.
 
+## Easiest install (Windows)
+
+Open **PowerShell** (press the Windows key, type *PowerShell*, press Enter), paste this line, and press Enter:
+
+```powershell
+irm https://raw.githubusercontent.com/300SpartanDev/framehand/main/install.ps1 | iex
+```
+
+It downloads FRAMEHAND to your user folder, installs Node.js and FFmpeg if they are missing (using winget, the app installer built into Windows 10 and 11), and puts a **Start Framehand** icon on your Desktop. Microsoft Edge, which comes with Windows, draws the frames, so you don't need Chrome. To update later, run the same line again; your videos are kept.
+
 ## 30-second start (Mac, by hand)
 
 1. Install three free things (one time):
@@ -53,6 +63,7 @@ It downloads FRAMEHAND, installs what it needs, and puts a **Start Framehand** i
    (First time only: right-click it → **Open** → **Open**, because macOS asks about files from the internet.
    Do the same once for `bin/ffmpeg` and `bin/ffprobe` if macOS says they are from an unidentified developer.)
    If something is missing, it tells you what and opens the download page.
+   *On Windows, double-click **`run_ui.cmd`** instead (FFmpeg: `winget install -e --id Gyan.FFmpeg`, or put `ffmpeg.exe` and `ffprobe.exe` in the `bin` folder; Edge works as the browser).*
 3. Your browser opens FRAMEHAND. Type one line, for example
    *"Little Owl Café. 2 for 1 flat whites before 10am. Come by today"* (or tap one of the examples), and press **Make video**.
 
