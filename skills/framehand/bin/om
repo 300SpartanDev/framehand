@@ -1,5 +1,8 @@
 #!/bin/sh
-# Runs the framehand CLI shipped next to this skill; falls back to the npm package.
+# Runs the framehand CLI shipped next to this skill (cli/om.js in the FRAMEHAND folder).
 DIR="$(cd "$(dirname "$0")" && pwd -P)"
 if [ -f "$DIR/../../../cli/om.js" ]; then exec node "$DIR/../../../cli/om.js" "$@"; fi
-exec npx --yes framehand "$@"
+echo "framehand: can't find cli/om.js. This script only works from the skill inside the FRAMEHAND folder (skills/framehand/bin/om, next to cli/om.js)." >&2
+echo "In the FRAMEHAND folder, run instead: node cli/om.js $*" >&2
+echo "Get FRAMEHAND: https://github.com/300SpartanDev/framehand" >&2
+exit 1
