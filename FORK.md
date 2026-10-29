@@ -7,7 +7,7 @@ FRAMEHAND is a consumer-focused version of an open-source motion-graphics engine
 | Area | What |
 |---|---|
 | Core flow | **One line → a unique video → share pack** (wide 16:9, vertical 9:16 or both). It never posts by itself |
-| Variety | 10 styles (`kinetic-type`, `keynote-ui`, `kurzgesagt`, `whiteboard`, `math-3b1b`, `finance-chart`, `vox-collage`, `storytime`, `ui-space`, `object-3d`), picked by what the brief is about, each with several scene plans. Same brief + a different version number → a different video |
+| Variety | 16 styles in `templates/` (`node cli/om.js templates` lists them). The brief picks from 13 looks built on 11 of them (`shop-poster` in three print styles: riso poster, chalk menu board and kraft market stamps; `kinetic-type`, `keynote-ui`, `kurzgesagt`, `whiteboard`, `math-3b1b`, `finance-chart`, `vox-collage`, `storytime`, `ui-space`, `object-3d`), picked by what the brief is about, each with several scene plans. The other five (`blank`, `local-business`, `real-estate`, `gym-fitness`, `talking-head`) are starters for `om new --template`. Same brief + a different version number → a different video |
 | Honesty | Only the user's own numbers, pictures and words appear; styles that need a chart, formula or screenshot are skipped without one |
 | Engine | `cli/lib/compose-brief.js` (reads the brief, picks a style and plan), `cli/lib/brand-layer.js` (logo, screenshot, end card), `cli/lib/caption.js` (per-app captions) |
 | App | `om ui` — local page: quick look, progress with time left, stop, music toggle, your videos, share packs |

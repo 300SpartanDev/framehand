@@ -3,9 +3,9 @@ name: framehand
 description: "Motion graphics, launch videos and explainers as editable code. A director picks the motion language for your product; you point at frames to change them."
 metadata:
   author: "framehand"
-  homepage: "https://github.com/framehand"
-  repository: "https://github.com/framehand/framehand"
-  version: "0.3.1"
+  homepage: "https://github.com/300SpartanDev/framehand"
+  repository: "https://github.com/300SpartanDev/framehand"
+  version: "0.4.1"
 ---
 
 # framehand
@@ -17,7 +17,7 @@ Aim for something people want to share — a film that could only be about this 
 ## The tool
 
 ```sh
-OM="<this skill's folder>/bin/om"      # or: npx framehand  (same commands)
+OM="<this skill's folder>/bin/om"      # or, in the FRAMEHAND folder: node cli/om.js  (same commands)
 $OM grab <folder|url> <dir>            # the product's real material into <dir>/materials/: screenshots, logo, images, its colours and type
 $OM new <dir>                          # contract-ready starter project
 $OM studio <dir> --no-open &           # live preview + direct edits + comments (prints the URL)
