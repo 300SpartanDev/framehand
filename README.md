@@ -7,6 +7,12 @@
 **Write one line about your business. Get a short, unique promo video.**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Website](https://img.shields.io/badge/Website-framehand--rose.vercel.app-F26B1D)](https://framehand-rose.vercel.app)
+[![Mac](https://img.shields.io/badge/Mac-supported-black?logo=apple)](#easiest-install-mac)
+[![Windows](https://img.shields.io/badge/Windows-supported-black?logo=windows)](#easiest-install-windows)
+[![Stars](https://img.shields.io/github/stars/300SpartanDev/framehand?style=social)](https://github.com/300SpartanDev/framehand/stargazers)
+
+**[Try it](https://framehand-rose.vercel.app) · [Install on Mac](#easiest-install-mac) · [Install on Windows](#easiest-install-windows)**
 
 </div>
 
@@ -140,3 +146,7 @@ Tests: `npm test`. The agent skill lives in [`skills/framehand/SKILL.md`](skills
 
 MIT — see [LICENSE](LICENSE) and [NOTICE.md](NOTICE.md). Third-party parts: [THIRD_PARTY.md](THIRD_PARTY.md).
 Notes on this version: [FORK.md](FORK.md).
+
+---
+
+<p align="center">If FRAMEHAND saved you an afternoon of editing, a ⭐ helps other small businesses find it.</p>
