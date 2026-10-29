@@ -21,7 +21,7 @@ test('om share: the GIF is the opening plus the end frame, under the size limit,
   assert.ok(Math.abs(seconds(gif) - 11.6) < 0.2, `opening 10 s + end 1.6 s, got ${seconds(gif)}`);
   assert.ok(statSync(gif).size <= 10 * 1024 * 1024);
   const md = readFileSync(join(root, 'out', 'share', 'share.md'), 'utf8');
-  assert.match(md, /Made with framehand · https:\/\/github\.com\/framehand\/framehand #framehand/);
+  assert.match(md, /Made with framehand · https:\/\/github\.com\/300SpartanDev\/framehand #framehand/);
   assert.match(md, /out\/share\/film-v1\.gif/);
 });
 

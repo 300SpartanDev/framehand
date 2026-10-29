@@ -8,7 +8,7 @@ import zlib from 'node:zlib';
 import { OmError, readSource, scan } from './project.js';
 
 const PKG = resolve(dirname(fileURLToPath(import.meta.url)), '../..');
-export const REPO_URL = 'https://github.com/framehand/framehand';
+export const REPO_URL = 'https://github.com/300SpartanDev/framehand';
 const SKILL = REPO_URL.replace(/^https:\/\/github\.com\//, '');
 
 // ---------- what ships ----------
@@ -276,9 +276,9 @@ footer a:hover { color: var(--ink); }
   <p class="lead">It's code, not pixels. Paste this into Claude Code, Codex, Cursor or any coding agent, then point at the frame to change it.</p>
   <div class="label">Prompt</div>
   <div class="code prompt"><pre id="prompt"></pre><button class="copy" data-copy="prompt"></button></div>
-  <div class="label">First time with framehand</div>
+  <div class="label">First time with framehand (run the second line in the framehand folder)</div>
   <div class="code cmd"><pre id="skill">npx skills add ${esc(SKILL)}</pre><button class="copy" data-copy="skill"></button></div>
-  <div class="code cmd"><pre id="demo">npx framehand demo</pre><button class="copy" data-copy="demo"></button></div>
+  <div class="code cmd"><pre id="demo">node cli/om.js demo</pre><button class="copy" data-copy="demo"></button></div>
   <div class="dl"><span>The whole project, ready for <code>om studio</code></span><a href="source.zip" download>source.zip ↓</a></div>
 </div>
 
@@ -291,7 +291,7 @@ footer a:hover { color: var(--ink); }
   const $ = (id) => document.getElementById(id);
   const root = document.documentElement, player = $('player'), sheet = $('sheet'), remix = $('remix'), stage = $('stage');
   const T = {
-    en: { copy: 'Copy', copied: 'Copied', prompt: (t, url) => 'Remix this film with framehand: "' + t + '".\\nSource: ' + url + ' (download and unzip it, then run \`npx framehand studio ' + D.name + '\` so I can watch and point at the frame while you work).\\nKeep what works, and change it to: ' },
+    en: { copy: 'Copy', copied: 'Copied', prompt: (t, url) => 'Remix this film with framehand: "' + t + '".\\nSource: ' + url + ' (download and unzip it, then in the framehand folder (' + D.repo + ') run \`node cli/om.js studio <path to the unzipped ' + D.name + ' folder>\` so I can watch and point at the frame while you work).\\nKeep what works, and change it to: ' },
   };
   const store = (k, v) => { try { return v === undefined ? localStorage.getItem(k) : localStorage.setItem(k, v); } catch { return null; } };
   $('prompt').textContent = T.en.prompt(D.title.en, new URL('source.zip', location.href).href);
