@@ -6,18 +6,24 @@
 
 **Write one line about your business. Get a short, unique promo video.**
 
+Free and open source (MIT). Runs on your own computer. Never posts for you.
+
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Release](https://img.shields.io/github/v/release/300SpartanDev/framehand)](https://github.com/300SpartanDev/framehand/releases/latest)
+[![Tests](https://github.com/300SpartanDev/framehand/actions/workflows/test.yml/badge.svg)](https://github.com/300SpartanDev/framehand/actions/workflows/test.yml)
 [![Website](https://img.shields.io/badge/Website-framehand--rose.vercel.app-F26B1D)](https://framehand-rose.vercel.app)
 [![Mac](https://img.shields.io/badge/Mac-supported-black?logo=apple)](#easiest-install-mac)
 [![Windows](https://img.shields.io/badge/Windows-supported-black?logo=windows)](#easiest-install-windows)
 [![Stars](https://img.shields.io/github/stars/300SpartanDev/framehand?style=social)](https://github.com/300SpartanDev/framehand/stargazers)
 
-**[Try it](https://framehand-rose.vercel.app) · [Install on Mac](#easiest-install-mac) · [Install on Windows](#easiest-install-windows)**
+**[Try it](https://framehand-rose.vercel.app) · [Install on Mac](#easiest-install-mac) · [Install on Windows](#easiest-install-windows) · [How it works](#how-it-works) · [Contributing](#contributing)**
 
 </div>
 
 <p align="center"><img src="docs/media/demo.gif" alt="Three FRAMEHAND videos: a barbershop, a café and a gym, made from one line each" width="660"></p>
-<p align="center"><sub>Made from one line each: a barbershop, a café and a gym (9:16, for Reels and TikTok). Still frames: <a href="docs/media/">docs/media</a>.</sub></p>
+<p align="center"><sub>Made from one line each: a barbershop, a café and a gym (9:16, for Reels and TikTok):<br>
+<i>"Leo's Barbershop fresh fades in Velika Plana. Book today."</i> · <i>"Little Owl café. Weekend flat white, 2 for 1. Visit us on Main St this Saturday"</i> · <i>"Iron Current gym. 30-day starter, first week free."</i><br>
+Still frames: <a href="docs/media/">docs/media</a> · Launch video: <a href="https://framehand-rose.vercel.app">framehand-rose.vercel.app</a></sub></p>
 
 > **FRAMEHAND runs on your own computer, and it can't post for you.**
 > Nothing is uploaded anywhere. When a video is ready, FRAMEHAND gives you the file and a caption,
@@ -35,6 +41,18 @@ FRAMEHAND is a free app for small businesses (cafés, barbershops, gyms, shops, 
 - **Ready-to-post captions.** A share pack for X, Instagram, TikTok, YouTube Shorts and LinkedIn: the video, a caption written for each app, and one click to open its upload page.
 - **Any language.** Briefs, captions and on-screen text work in many languages and alphabets, including accents and right-to-left scripts.
 - **Private and yours.** It runs on your own laptop. Nothing is uploaded, there's no account, and it **never posts for you**: you always press Post yourself.
+
+## How it works
+
+1. You type one line, e.g. *"Little Owl Café. 2 for 1 flat whites before 10am. Come by today"*.
+2. FRAMEHAND reads what it's about and picks a matching look and scene plan (`cli/lib/compose-brief.js`).
+   Shops lead with their offer; looks that need a chart, a formula or a screenshot are skipped when you don't give one.
+3. Your logo, colours and photo are layered in (`cli/lib/brand-layer.js`) and a short original soundtrack is made on your computer.
+4. Each video is a small web page (HTML + [GSAP](https://gsap.com) animation). It is drawn frame by frame in your own Chrome
+   (or Edge on Windows), and **FFmpeg** turns the frames into an MP4.
+5. You get the video (9:16, 16:9 or both) plus a caption written for each app (`cli/lib/caption.js`), and you post it yourself.
+
+The styles live in [`templates/`](templates/); `node cli/om.js templates` lists them.
 
 ## Easiest install (Mac)
 
@@ -58,19 +76,22 @@ It downloads FRAMEHAND to your user folder, installs Node.js and FFmpeg if they 
 
 ## 30-second start (Mac, by hand)
 
-1. Install three free things (one time):
+1. **Get the `framehand` folder:** download the latest release from <https://github.com/300SpartanDev/framehand/releases/latest>
+   (under *Assets*, click **Source code (zip)**) and unzip it. The folder it makes (named like `framehand-0.4.1`) is your `framehand` folder.
+   You can also click **Code → Download ZIP** on this page.
+2. Install three free things (one time):
    - **Node.js 22** or newer — <https://nodejs.org> (pick "LTS", run the installer)
    - **FFmpeg** (makes the video files) — no Homebrew needed:
      download **ffmpeg** and **ffprobe** from <https://evermeet.cx/ffmpeg/> (or <https://www.ffmpeg.org/download.html>),
      unzip both, and put the two files in a folder called `bin` inside the `framehand` folder.
      *If you already use Homebrew, `brew install ffmpeg` does the same.*
    - **Google Chrome** — <https://www.google.com/chrome/> (FRAMEHAND uses it quietly to draw each frame)
-2. Open the `framehand` folder and **double-click `run_ui.command`**.
+3. Open the `framehand` folder and **double-click `run_ui.command`**.
    (First time only: right-click it → **Open** → **Open**, because macOS asks about files from the internet.
    Do the same once for `bin/ffmpeg` and `bin/ffprobe` if macOS says they are from an unidentified developer.)
    If something is missing, it tells you what and opens the download page.
    *On Windows, double-click **`run_ui.cmd`** instead (FFmpeg: `winget install -e --id Gyan.FFmpeg`, or put `ffmpeg.exe` and `ffprobe.exe` in the `bin` folder; Edge works as the browser).*
-3. Your browser opens FRAMEHAND. Type one line, for example
+4. Your browser opens FRAMEHAND. Type one line, for example
    *"Little Owl Café. 2 for 1 flat whites before 10am. Come by today"* (or tap one of the examples), and press **Make video**.
 
 <p align="center"><img src="docs/media/app.jpg" alt="The FRAMEHAND app: your brief on the left, the video in a phone frame in the middle, a caption and download for each app on the right" width="760"></p>
@@ -140,7 +161,28 @@ The command-line tool is `node cli/om.js` (also installed as `om` / `framehand` 
 | `node cli/om.js x-demo my-film` | Writes an X post draft (never posts) |
 | `node cli/om.js help` | Everything else |
 
-Tests: `npm test`. The agent skill lives in [`skills/framehand/SKILL.md`](skills/framehand/SKILL.md).
+Requirements: Node.js 22+, FFmpeg (`ffmpeg` and `ffprobe`), and Chrome, Chromium, Edge or Brave (or set `OM_CHROME` to a browser's path).
+
+Tests: `npm test`. CI runs the tests on Linux and a render smoke test on Windows ([workflow](.github/workflows/test.yml)).
+The agent skill lives in [`skills/framehand/SKILL.md`](skills/framehand/SKILL.md).
+
+## Contributing
+
+Bug reports, style ideas and pull requests are welcome. The short version:
+
+1. Fork and clone the repo, then run `node cli/om.js doctor` to check Node, Chrome and FFmpeg.
+2. Make your change and run `npm test`.
+3. Open a pull request. For bigger changes, please open an issue first so we can talk about it.
+
+Styles live in [`templates/`](templates/), the engine in [`cli/lib/`](cli/lib/) and [`runtime/`](runtime/).
+New here? Look for issues labelled [`good first issue`](https://github.com/300SpartanDev/framehand/labels/good%20first%20issue).
+Details: [CONTRIBUTING.md](CONTRIBUTING.md).
+
+## Credits
+
+FRAMEHAND is a consumer-focused version of an open-source motion-graphics engine, originally published under the MIT License
+(Copyright (c) 2026 Huashu). See [NOTICE.md](NOTICE.md), and [FORK.md](FORK.md) for what this version adds.
+Fonts and libraries (including GSAP): [THIRD_PARTY.md](THIRD_PARTY.md).
 
 ## License
 
