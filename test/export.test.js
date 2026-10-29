@@ -114,7 +114,8 @@ test('export writes every file, injects the runtime into the copy only, and zips
   assert.ok(page.includes('href="source.zip" download'));
   assert.ok(page.includes('--ar: 1080 / 1920'), 'aspect ratio comes from the composition');
   assert.ok(page.includes('Q3 &amp; more') && page.includes('one line'));
-  assert.ok(page.includes('npx framehand demo'));
+  assert.ok(page.includes('node cli/om.js demo'));
+  assert.ok(!page.includes('npx framehand'), 'no npx command: framehand is not on npm');
   for (const [, code] of page.matchAll(/<script>([\s\S]*?)<\/script>/g)) new Function(code); // the inline scripts parse
 });
 
